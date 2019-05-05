@@ -113,6 +113,14 @@
   display: block;
 }
 
+.pass {
+  position: relative;
+}
 
-
-   
+.passIcon {
+  position: absolute;
+  top: 50%;
+  padding: 5px 0px;
+  left: 90%;
+  z-index: 1
+}

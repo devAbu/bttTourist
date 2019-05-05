@@ -71,11 +71,30 @@ jQuery("#loginButton").click(function (){
     var loginEmail=document.getElementById('login-email').value;
     var loginPassword=document.getElementById('login-password').value;
 
-    if (loginEmail=="" || loginPassword==""){
+    function validateEmail($loginEmail) {
+        var loginEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        return loginEmail.test($loginEmail);
+    }
+
+    if (loginEmail=="" && loginPassword==""){
         document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
         document.getElementById("loginSuccess").innerHTML="Please enter Your E-Mail and password";
         return false;
-    } else {
+    } else if(loginEmail ==""){
+        document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
+        document.getElementById("loginSuccess").innerHTML="Please enter Your E-Mail";
+        return false;
+    } else if (!validateEmail(loginEmail)) {
+        document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
+        document.getElementById("loginSuccess").innerHTML="Please enter a valide E-Mail address";
+        return false;
+    }else if(loginPassword ==""){
+        document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
+        document.getElementById("loginSuccess").innerHTML="Please enter Your password";
+        return false;
+    } 
+    
+    else {
         var data = jQuery("#loginForm").serialize();
         jQuery("#loginForm").find('input').each(function(){
             data[jQuery(this).attr('name')]=jQuery(this).val();
@@ -93,7 +112,7 @@ jQuery("#loginButton").click(function (){
             if (response.trim()=='success'){
                 document.getElementById("loginSuccess").innerHTML = "Redirecting...";
                 document.getElementById("loginSuccess").style.backgroundColor="#18BC9C";
-                window.location.replace("/tourist/profile.php");
+                window.location.replace("/profile.php");
             } else if(response.trim()=='password'){
                 document.getElementById("loginSuccess").innerHTML = "Incorrect password";
                 document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
@@ -101,7 +120,7 @@ jQuery("#loginButton").click(function (){
                 document.getElementById("loginSuccess").innerHTML = "Your E-Mail is not verified yet!";
                 document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
             }else {
-                document.getElementById("loginSuccess").innerHTML = "There was an error. Try again or contact us.";
+                document.getElementById("loginSuccess").innerHTML = "The e-mail does not exists!!!";
                 document.getElementById("loginSuccess").style.backgroundColor="#bb0000";
             }
         })

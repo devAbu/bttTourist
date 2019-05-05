@@ -37,6 +37,8 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <title>BTT</title>
+        <link rel="shortcut icon" href="img/btt_logo_icon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="css/style.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>jQuery.noConflict();</script>
@@ -62,7 +64,10 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">BTT</a>
+                <a href="#page-top">
+                    <img src="img/btt logo png.png" alt="logo" width="95" height="75" class="mr-2">
+                </a>
+                <a class="navbar-brand js-scroll-trigger" href="#page-top"> BTT</a>
                 <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 
                     <i class="fas fa-bars"></i>
@@ -84,9 +89,9 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
         <header class="masthead bg-primary text-white text-center" >
             <div class="container">
                 <h1 class="text-uppercase mb-0"> </h1>
-                <img class="img-fluid mb-5 d-block mx-auto" src="img/sebilj.png" alt="">
+                <img class="img-fluid mb-5 d-block mx-auto" src="img/btt logo png.png" alt="logo" style="width: 50%; height: 50%">
                 <hr class="star-light">
-                <h2 class="font-weight-light mb-0">About Us</h2>
+                <h2 class="font-weight-light mb-0">Home to medieval villages, rivers and lakes, plus the craggy Dinaric Alps, and many more, explore our Country.</h2>
             </div>
         </header>
 
@@ -109,9 +114,12 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
                             </div>
                             <div class="control-group">
                                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <label>Password</label>
-                                    <input class="form-control" id="login-password" name="login-password" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password">
-                                    <p class="help-block text-danger"></p>
+                                    <div class="pass">
+                                        <label>Password</label>
+                                        <input class="form-control" id="login-password" name="login-password" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password">
+                                        <i class="fas fa-eye-slash passIcon"></i>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
                                 </div>
                             </div>           
                             <br>
@@ -123,6 +131,7 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
                     </div>
                     <div class="col-lg-1" style="border-right: 1px solid #26343F">
                     </div>
+
 
                     <!--REGISTER FORM-->
                     <div class="col-md-6 col-lg-4 mx-auto" >
@@ -177,8 +186,9 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
                 <hr class="star-dark mb-5">
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate" action="mail/contact_me.php" method="post">
-                            <div class="control-group">
+                    <!-- action="mail/contact_me.php" method="post" -->
+                        <form name="sentMessage" id="contactForm" novalidate="novalidate" >
+                            <div class="control-group" action="mail/contact_me.php" method="post">
                                 <div class="form-group floating-label-form-group controls mb-0 pb-2">                            
                                     <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
@@ -192,7 +202,7 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
                             </div>
                             <div class="control-group">
                                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                    <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number.">
+                                    <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number." pattern="\d*">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
@@ -213,6 +223,28 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
                 </div>
             </div>
         </section>
+
+        <!-- <script>
+            $$('#contactForm').on('submit', function (e){
+                e.preventDefault();
+                $.ajax({
+                    url: "mail/contact_me.php",
+                    method: 'post',
+                    data: $('#contactForm').serialize(),
+
+                    success: function(data){
+                        alert('poslan')
+                    } else {
+                        alert('nije posaln')
+                    }, 
+                    error: function(err){
+                        alert('greska')
+                    }
+
+                })
+            })
+            
+        </script> -->
 
         <!-- Footer -->
         <footer class="footer text-center">
@@ -288,6 +320,22 @@ if(isset($_SESSION['name']) || !isset($_SESSION)){
         <!-- Custom scripts for this template -->
         <script src="js/freelancer.min.js"></script>
         <script src="logreg/logreg.js"></script>
+
+        <script>
+            jQuery('.passIcon').click(function () {
+                var elementType = jQuery('#login-password').attr('type');
+                console.log(elementType);
+                if (elementType == "text") {
+                    jQuery('#login-password').attr('type', 'password');
+                    jQuery('.passIcon').removeClass('fa-eye');
+                    jQuery('.passIcon').addClass('fa-eye-slash');
+                } else if (elementType == "password") {
+                    jQuery('#login-password').attr('type', 'text');
+                    jQuery('.passIcon').removeClass('fa-eye-slash');
+                    jQuery('.passIcon').addClass('fa-eye');
+                }
+            });
+        </script>
     </body>
 
 
